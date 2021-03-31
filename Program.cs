@@ -289,6 +289,38 @@ private static async void BotOnUpdate(object su, Telegram.Bot.Args.UpdateEventAr
 
                 if (message.Chat.Id == ginance_chat || message.Chat.Id == test)
                 {
+                     if (message.Text == "/avax_usdt@Ginance_BOT")
+                    {
+                        try
+                        {
+                            string symbol = "AVAX";
+                            System.Net.WebClient wc = new System.Net.WebClient();
+                            String price_Response = wc.DownloadString("https://api.hbtc.com/openapi/quote/v1/ticker/24hr?symbol="+symbol+"USDT");
+
+                            String hbc_price1 = System.Text.RegularExpressions.Regex.Match(price_Response, @"lastPrice"":""[0-9]+.[0-9]+").Groups[0].Value;
+                            String hbc_price = System.Text.RegularExpressions.Regex.Match(hbc_price1, @"[0-9]+.[0-9]+").Groups[0].Value;
+
+                            String hbc_highPrice1 = System.Text.RegularExpressions.Regex.Match(price_Response, @"highPrice"":""[0-9]+.[0-9]+").Groups[0].Value;
+                            String hbc_highPrice = System.Text.RegularExpressions.Regex.Match(hbc_highPrice1, @"[0-9]+.[0-9]+").Groups[0].Value;
+
+                            String hbc_lowPrice1 = System.Text.RegularExpressions.Regex.Match(price_Response, @"lowPrice"":""[0-9]+.[0-9]+").Groups[0].Value;
+                            String hbc_lowPrice = System.Text.RegularExpressions.Regex.Match(hbc_lowPrice1, @"[0-9]+.[0-9]+").Groups[0].Value; 
+
+                            String hbc_quoteVolume1 = System.Text.RegularExpressions.Regex.Match(price_Response, @"quoteVolume"":""[0-9]+.[0-9]+").Groups[0].Value;
+                            String hbc_quoteVolume = System.Text.RegularExpressions.Regex.Match(hbc_quoteVolume1, @"[0-9]+.[0-9]+").Groups[0].Value;
+
+                            
+                            await Bot_Ginance.DeleteMessageAsync(message.Chat.Id, message.MessageId);
+                            string name_file = HBTC_linux.charts.chart(symbol + "USDT");
+                            Console.WriteLine(name_file);
+                            await Bot_Ginance.SendPhotoAsync(message.Chat.Id, System.IO.File.Open(name_file, FileMode.Open), "<code><b>"+ symbol + "/USDT</b>" + "\n" + "Price:" + hbc_price + " USDT"+"\n"+ "24H High:" + hbc_highPrice + " USDT" + "\n" + "24H Low:" + hbc_lowPrice + " USDT" + "\n" + "24H Total:" + hbc_quoteVolume + " USDT" + "</code>", ParseMode.Html, false,  0, inlineKeyboardMarkup);
+
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                    }
                     if (message.Text == "/1inch_usdt@Ginance_BOT")
                     {
                         try

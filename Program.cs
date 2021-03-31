@@ -79,9 +79,7 @@ namespace HBTC_linux
                 aTimer.Elapsed += OnTimedEvent;
                 aTimer.AutoReset = true;
                 aTimer.Enabled = true;
-                string test_api_bot = "673649420:AAG2O4s9qDmBVpmFtt4wG12dZ3nV-nBm3JA";
-                string hbtc_api_bot = "1470290796:AAE_hLDL1FjOJ5-YuTmQXHvNiutfjDqwfYo";
-                string ginance_api_bot = "1496019784:AAGWirthfgMcDOZpkBZfUHwrS3Ve9ckfxvY";
+               
 
 
                 Bot = new TelegramBotClient(hbtc_api_bot);
